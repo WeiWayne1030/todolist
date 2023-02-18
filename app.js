@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const app = express()
 
 const exphbs = require('express-handlebars')
+const Todo = require('./models/todo')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -26,7 +27,11 @@ app.engine('hbs', exphbs({ defaultLayout:'main', extname: '.hbs'}))
 app.set('view engine', 'hbs')
 
 app.get('/', (req, res) =>{
-  res.render('index')
+  //get all todo data
+  Todo.find()
+    .lean()
+    .then(todos => res.render('index', {todos: todos}))
+    .catch(error => console.error(error))
 })
 
 app.listen(3000, () =>{
