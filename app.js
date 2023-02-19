@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 
 const exphbs = require('express-handlebars')
 const Todo = require('./models/todo')
+const { findById } = require('./models/todo')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -72,6 +73,14 @@ app.post('/todos/:id/edit', (req, res) =>{
       return todo.save()
     })
     .then(()=> res.redirect(`/todos/${id}`))
+    .catch(error => console.log(error))
+})
+
+app.post('/todos/:id/delete', (req,res) =>{
+  const id = req.params.id
+  return Todo.findById(id)
+    .then(todo => todo.remove())
+    .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
 
