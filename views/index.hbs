@@ -3,6 +3,7 @@
 <ul>
   {{#each todos}}
   <li>
+    <input type="checkbox" name="isDone" {{#if this.isDone}} checked {{/if}} disabled>
     {{this.name}}
     {{!-- id mongo幫我們編列好了 --}}
     <a href="./todos/{{ this._id }}">detail</a> 
