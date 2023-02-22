@@ -7,6 +7,8 @@ const exphbs = require('express-handlebars')
 const Todo = require('./models/todo')
 const { findById } = require('./models/todo')
 
+const routes = require('./routes') //預設就會去找index
+
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
@@ -32,14 +34,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(methodOverride('_method'))
 
-app.get('/', (req, res) =>{
-  //get all todo data
-  Todo.find()
-    .lean()
-    .sort({ name: 'asc'}) //desc
-    .then(todos => res.render('index', {todos: todos}))
-    .catch(error => console.error(error))
-})
+app.use(routes)
 
 app.get('/todos/new', (req, res) =>{
   return res.render('new')
