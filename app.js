@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars')
 
 const routes = require('./routes') //預設就會去找index
 const app = express()
+const PORT = process.env.PORT || 3000
 
 require('./config/mongoose')
 
@@ -16,6 +17,6 @@ app.use(routes)
 
 
 
-app.listen(3000, () =>{
-  console.log('App is running on http://localhost:3000')
+app.listen(PORT, () =>{
+  console.log(`App is running on http://localhost:${PORT}`)
 })
